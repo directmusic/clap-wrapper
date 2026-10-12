@@ -927,19 +927,6 @@ void WrapAsAUV2::Cleanup()
 {
   LOGINFO("[clap-wrapper] Cleaning up Plugin");
   auto guarantee_mainthread = _plugin->AlwaysMainThread();
-  if (this->_uiIsOpened)
-  {
-    LOGINFO("[clap-wrapper] !! UI still open, destroying UI and disconnecting view");
-    if (_uiconn._canary)
-    {
-      *_uiconn._canary = 0;       // reset the canary
-      _uiconn._canary = nullptr;  // and disconnect it
-      if (_plugin->_plugin && _plugin->_ext._gui)
-      {
-        this->_uiconn._destroyWindow();
-      }
-    }
-  }
   deactivateCLAP();
   releaseHostMIDIOutput();
   Base::Cleanup();
